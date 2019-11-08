@@ -21,7 +21,7 @@ namespace dnc_csharp
             int port = 53;
             //server_address = (address, port);
             //socket.Connect(address, port);
-            byte[] msg = StringToByteArray(message);
+            byte[] msg = ToByteArray(message);
 
             IPHostEntry ipHost = Dns.GetHostEntry("8.8.8.8");
             IPAddress ipAddr = ipHost.AddressList[0];       // Изменил адрес на IPv4
@@ -29,24 +29,33 @@ namespace dnc_csharp
             // IPAddress ipAddr = ipHost.AddressList[1];
             EndPoint ipEndPoint = new IPEndPoint(ipAddr, 53);
             socket.SendTo(msg, ipEndPoint);
-
-
             //socket.Send(msg);
             //byte response = socket.Receive(4096);
             byte[] bytes = new byte[4096];
-            //int bytesRec = socket.Receive(bytes);
-            int bytesRec = socket.ReceiveFrom(bytes, ref ipEndPoint);
-            string rescponse = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-            //string rescponse = BitConverter.ToString(bytes);
+            int bytesRec = socket.Receive(bytes);
+            string response = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+            string response2 = ToString(bytes, bytesRec);
             socket.Close();
         }
 
-        public static byte[] StringToByteArray(string hex)
+        public static byte[] ToByteArray(string hex)
         {
             return Enumerable.Range(0, hex.Length)
                              .Where(x => x % 2 == 0)
                              .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
                              .ToArray();
+        }
+
+        public static string ToString(byte[] bytes, int count = -1)
+        {
+            if (count == -1)
+            {
+                count = bytes.Length;
+            }
+            
+            string result = BitConverter.ToString(bytes.Take(count).ToArray());
+
+            return result.Replace("-", "");
         }
     }
 }
