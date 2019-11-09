@@ -6,7 +6,13 @@ namespace dnc_csharp.Classes
 {
     public class Header : Record
     {
-        public string QR;
+        public string QR
+        {
+            get
+            {
+                return 
+            }
+        }
         public string OPCODE;
         public string AA;
         public string TC;
