@@ -11,7 +11,7 @@ namespace dnc_csharp.Classes
         {
             NameEnd = IndexOf(Data, 0, 0) + 1;
         }
-        private int NameEnd;
+        protected int NameEnd;
         public string NAME
         {
             get

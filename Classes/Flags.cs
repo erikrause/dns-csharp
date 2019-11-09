@@ -10,19 +10,22 @@ namespace dnc_csharp.Classes
         {
         }
 
-        public byte[] QR
+        public int QR
         {
             get
             {
-                return DataRange(0, 1);
+                byte b = DataRange(0, 1)[0];
+                byte mask = 0x80;
+                //var prob = 0b_1000_0000 & 0b_1000_0000;
+                return b & mask;
             }
         }
-        public byte[] OPCODE;
-        public byte[] AA;
-        public byte[] TC;
-        public byte[] RD;
-        public byte[] RA;
-        public byte[] Z;
-        public byte[] RCODE;
+        public int OPCODE;
+        public int AA;
+        public int TC;
+        public int RD;
+        public int RA;
+        public int Z;
+        public int RCODE;
     }
 }
