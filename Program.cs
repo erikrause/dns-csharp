@@ -25,7 +25,7 @@ namespace dnc_csharp
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
             IPAddress ipAddr = ipHost.AddressList[0]; 
             EndPoint ipEndPoint = new IPEndPoint(ipAddr, dnsPort);
-            socket.SendTo(Message.message, ipEndPoint);
+            socket.SendTo(request.Data, ipEndPoint);
 
             byte[] bytes = new byte[4096];
             int bytesRec = socket.Receive(bytes);
