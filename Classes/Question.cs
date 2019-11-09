@@ -7,9 +7,8 @@ namespace dnc_csharp.Classes
 {
     public class Question : Request
     {
-        public Question(byte[] data, int numberOfRecords)
+        public Question(byte[] data, int numberOfRecords) : base(data)
         {
-            Data = data;
             Records = new List<Record>(numberOfRecords);
             InitializeRecords(numberOfRecords);
         }

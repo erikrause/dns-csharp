@@ -8,7 +8,12 @@ namespace dnc_csharp.Classes
 {
     public abstract class Request
     {
-        protected byte[] Data;
+        public readonly byte[] Data;
+
+        public Request(byte[] data)
+        {
+            Data = data;
+        }
 
         public int IndexOf(byte[] data, int value, int startByte = 0)
         {
@@ -59,7 +64,7 @@ namespace dnc_csharp.Classes
             return BitConverter.ToInt16(byteArray);
         }
 
-        protected byte[] ToByteArray(string hex)
+        public static byte[] ToByteArray(string hex)
         {
             hex = hex.Replace(" ", "").Replace("\n", "");
             return Enumerable.Range(0, hex.Length)
@@ -68,7 +73,7 @@ namespace dnc_csharp.Classes
                              .ToArray();
         }
 
-        protected string ToString(byte[] bytes, int count = -1)
+        public static string ToString(byte[] bytes, int count = -1)
         {
             if (count == -1)
             {

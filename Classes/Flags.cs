@@ -6,9 +6,8 @@ namespace dnc_csharp.Classes
 {
     public class Flags : Request
     {
-        public Flags(byte[] data)
+        public Flags(byte[] data) : base(data)
         {
-            Data = data;
         }
 
         public byte[] QR

@@ -6,9 +6,8 @@ namespace dnc_csharp.Classes
 {
     public class Header : Request
     {
-        public Header(byte[] data)
+        public Header(byte[] data) : base(data)
         {
-            Data = data;
             Flags = new Flags(DataRange(16, 16));
         }
         public byte[] ID
