@@ -8,7 +8,7 @@ namespace dnc_csharp.Classes
     {
         public Header(byte[] data) : base(data)
         {
-            Flags = new Flags(DataRange(16, 16));
+            Flags = new Flags(DataRange(2, 2));
         }
         public byte[] ID
         {
@@ -24,7 +24,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(32);
+                return GetDataInt(4);
             }
         }
         /// <summary>
@@ -34,7 +34,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(48);
+                return GetDataInt(6);
             }
         }
         /// <summary>
@@ -44,7 +44,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(64);
+                return GetDataInt(8);
             }
         }
         /// <summary>
@@ -54,7 +54,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(48);
+                return GetDataInt(10);
             }
         }
 

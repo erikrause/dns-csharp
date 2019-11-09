@@ -8,9 +8,9 @@ namespace dnc_csharp.Classes
     {
         public Message(byte[] data) : base(data)
         {
-            Header = new Header(DataRange(0, 12 * 8));
+            Header = new Header(DataRange(0, 12));
             int questionSize = GetQuestionSize(Header.QDCOUNT);
-            Question = new Question(DataRange(12 * 8, questionSize * 8), Header.QDCOUNT);
+            Question = new Question(DataRange(12, questionSize), Header.QDCOUNT);
             //Answer = new ResourseRequest(data);
         }
 
