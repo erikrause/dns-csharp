@@ -4,21 +4,63 @@ using System.Text;
 
 namespace dnc_csharp.Classes
 {
-    public class Header : Record
+    public class Header : Request
     {
-        public string QR
+        public Header(byte[] data)
+        {
+            Data = data;
+            Flags = new Flags(DataRange(16, 16));
+        }
+        public byte[] ID
         {
             get
             {
-                return 
+                return DataRange(0);
             }
         }
-        public string OPCODE;
-        public string AA;
-        public string TC;
-        public string RD;
-        public string RA;
-        public string Z;
-        public string RCODE;
+        /// <summary>
+        /// Number of questions.
+        /// </summary>
+        public int QDCOUNT
+        {
+            get
+            {
+                return GetDataInt(32);
+            }
+        }
+        /// <summary>
+        /// Number of answers.
+        /// </summary>
+        public int ANCOUNT
+        {
+            get
+            {
+                return GetDataInt(48);
+            }
+        }
+        /// <summary>
+        /// Number of authority.
+        /// </summary>
+        public int NSCOUNT
+        {
+            get
+            {
+                return GetDataInt(64);
+            }
+        }
+        /// <summary>
+        /// Number of additional.
+        /// </summary>
+        public int ARCOUNT
+        {
+            get
+            {
+                return GetDataInt(48);
+            }
+        }
+
+
+
+        public Flags Flags;
     }
 }

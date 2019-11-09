@@ -4,6 +4,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Linq;
 
+using dnc_csharp.Classes;
+
 namespace dnc_csharp
 {
     class Program
@@ -16,8 +18,12 @@ namespace dnc_csharp
             int dnsPort = 53;
             byte[] msg = ToByteArray(message);
 
+            // DEGUG:
+            Message mes = new Message(msg);
+            ///////////////
+
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
-            IPAddress ipAddr = ipHost.AddressList[0];       // Изменил адрес на IPv4
+            IPAddress ipAddr = ipHost.AddressList[0]; 
             EndPoint ipEndPoint = new IPEndPoint(ipAddr, dnsPort);
             socket.SendTo(msg, ipEndPoint);
 

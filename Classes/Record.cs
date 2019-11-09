@@ -1,34 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.ComponentModel;
 
 namespace dnc_csharp.Classes
 {
-    public abstract class Record
+    public class Record : Request
     {
-        private byte[] Message;
-
-        // Get data from message by bits flags.
-        private byte[] GetData(int startBit, int numberOfBits)
+        public Record(byte[] data)
         {
-            var byteList = new List<byte>();
-            int numberOfBytes = numberOfBits / 8;
-            int remainOfBits = numberOfBits % 8;
+            Data = data;
 
-            int i;
-            for (i = 0; i < numberOfBytes; i++)
-            {
-                byteList.Add(Message[i]);
-            }
-            if (remainOfBits != 0)
-            {
-                byte mask = (byte)(2 ^ remainOfBits);
-                byte lastBits = (byte)(Message[i] & mask);  // i + 1?
-                byteList.Add(lastBits);
-            }
-
-            return byteList.ToArray();
         }
+        public string NAME;
+        public int TYPE;
+        public int CLASS;
     }
 }
