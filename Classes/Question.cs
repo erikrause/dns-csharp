@@ -30,8 +30,8 @@ namespace dnc_csharp.Classes
                 endByte = endByte - 1;  // End of cycle. 
 
                 int numberOfBytes = endByte - startByte;
-                Records[rn].NAME = GetDataString(startByte * 8, numberOfBytes * 8);
-                Records[rn].TYPE = GetDataInt((startByte + 2) * 8);
+                //Records[rn].NAME = GetDataString(startByte * 8, numberOfBytes * 8);
+                //Records[rn].TYPE = GetDataInt((startByte + 2) * 8);
             }
               
         }

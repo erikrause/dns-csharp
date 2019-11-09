@@ -11,28 +11,23 @@ namespace dnc_csharp.Classes
             Data = data;
             Header = new Header(DataRange(0, 12 * 8));
             int questionSize = GetQuestionSize(Header.QDCOUNT);
-            Question = new Question(DataRange(12 * 8, questionSize), Header.QDCOUNT);
+            Question = new Question(DataRange(12 * 8, questionSize * 8), Header.QDCOUNT);
             //Answer = new ResourseRequest(data);
         }
 
         private int GetQuestionSize(int numberOfRecords)
         {
             int startByte = 12;
-            int i = startByte;
-            byte byteData;
+            int i = -1;
 
             for (int rn = 0; rn < numberOfRecords; rn++)
             {
-                do
-                {
-                    byteData = Data[i];
-                    i++;
-                } while (byteData != 0);
+                i = IndexOf(Data, 0, startByte) + 1;
                 i = i + 4;  // Add 2 type & class bytes;
             }
-            i = i - 1;  // End of cycle.     
 
-            return i;
+            int size = i - startByte;
+            return size;
         }
 
         public Header Header;

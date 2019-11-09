@@ -10,6 +10,20 @@ namespace dnc_csharp.Classes
     {
         protected byte[] Data;
 
+        public int IndexOf(byte[] data, int value, int startByte = 0)
+        {
+            int i = startByte;
+            byte byteData;
+            i--;
+            
+            do
+            {
+                i++;
+                byteData = data[i];
+            } while (byteData != value);
+
+            return i;
+        }
         // Get data from message by bits flags.
         protected byte[] DataRange(int startBit, int numberOfBits = 16)
         {
