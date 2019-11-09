@@ -20,7 +20,7 @@ namespace dnc_csharp
 
             // DEGUG:
             Message request = new Message(msg);
-            var prob = request.Header.Flags.QR;
+            var prob = request.Header.Flags.OPCODE;
             ///////////////
 
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);

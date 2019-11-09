@@ -30,7 +30,7 @@ namespace dnc_csharp.Classes
             return i;
         }
         // Get data from message by bits flags.
-        protected byte[] DataRange(int startByte, int numberOfBytes = 2)
+        protected byte[] DataRange(int startByte = 0, int numberOfBytes = 2)
         {
             var byteList = new List<byte>();
 
@@ -43,13 +43,13 @@ namespace dnc_csharp.Classes
             return byteList.ToArray();
         }
 
-        protected string GetDataString(int startByte, int numberOfBytes = 2)
+        protected string GetDataString(int startByte = 0, int numberOfBytes = 2)
         {
             byte[] byteArray = DataRange(startByte, numberOfBytes);
             return ToString(byteArray);
         }
 
-        protected int GetDataInt(int startByte, int numberOfBytes = 2)
+        protected int GetDataInt(int startByte = 0, int numberOfBytes = 2)
         {
             byte[] byteArray = DataRange(startByte, numberOfBytes);
             Array.Reverse(byteArray);
