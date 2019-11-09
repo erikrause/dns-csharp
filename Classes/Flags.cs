@@ -12,12 +12,28 @@ namespace dnc_csharp.Classes
         }
 
         protected int Field;
+               
+        protected int GetFlag(int mask)
+        {
+            int flag = Field & mask;
+
+            // Убрает нули в флаге справа:
+            if (flag > 0)
+            {
+                while ((flag & 1) == 0)
+                {
+                    flag >>= 1;
+                }
+            }
+            return flag;
+        }
+
         public int QR
         {
             get
             {
                 int mask = 0b1000_0000_0000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int OPCODE
@@ -25,7 +41,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0111_1000_0000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int AA
@@ -33,7 +49,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0100_0000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int TC
@@ -41,7 +57,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0010_0000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int RD
@@ -49,7 +65,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0001_0000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int RA
@@ -57,7 +73,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0000_1000_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int Z
@@ -65,7 +81,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0000_0111_0000;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
         public int RCODE
@@ -73,7 +89,7 @@ namespace dnc_csharp.Classes
             get
             {
                 int mask = 0b0000_0000_0000_1111;
-                return Field & mask;
+                return GetFlag(mask);
             }
         }
     }
