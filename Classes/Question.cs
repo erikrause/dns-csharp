@@ -5,12 +5,11 @@ using System.Text;
 
 namespace dnc_csharp.Classes
 {
-    public class Question : Request
+    public class Question : Datagram
     {
         public Question(byte[] data, int numberOfRecords) : base(data)
         {
             Records = new List<Record>(numberOfRecords);
-            prob = new List<int>(2);
             InitializeRecords(numberOfRecords);
         }
 
@@ -32,6 +31,5 @@ namespace dnc_csharp.Classes
             }              
         }
         private List<Record> Records;
-        private List<int> prob;
     }
 }

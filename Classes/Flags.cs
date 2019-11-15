@@ -4,7 +4,7 @@ using System.Text;
 
 namespace dnc_csharp.Classes
 {
-    public class Flags : Request
+    public class Flags : Datagram
     {
         public Flags(byte[] data) : base(data)
         {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace dnc_csharp.Classes
 {
-    public class Header : Request
+    public class Header : Datagram
     {
         public Header(byte[] data) : base(data)
         {

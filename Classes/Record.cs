@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class Record : Request
+    public class Record : Datagram
     {
         public Record(byte[] data) : base(data)
         {
@@ -30,7 +30,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(NameEnd + 16);
+                return GetDataInt(NameEnd + 2);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(NameEnd + 32, 8 * 4);
+                return GetDataInt(NameEnd + 4, 4);
             }
         }
 
@@ -23,7 +23,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(NameEnd + 64, 8 * 2);
+                return GetDataInt(NameEnd + 8, 2);
             }
         }
 
@@ -31,7 +31,7 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataString(NameEnd + 80, RDLENGTH);
+                return GetDataString(NameEnd + 10, RDLENGTH);
             }
         }
     }

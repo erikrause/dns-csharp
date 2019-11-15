@@ -16,7 +16,7 @@ namespace dnc_csharp
             string message = "BB AA 01 00 00 01 00 00 00 00 00 00 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 00 01 00 01";
             string dnsAddress = "8.8.8.8";
             int dnsPort = 53;
-            byte[] msg = Request.ToByteArray(message);
+            byte[] msg = Datagram.ToByteArray(message);
 
             // DEGUG:
             Message request = new Message(msg);
@@ -31,7 +31,7 @@ namespace dnc_csharp
             byte[] bytes = new byte[4096];
             int bytesRec = socket.Receive(bytes);
             string response = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-            string response2 = Request.ToString(bytes, bytesRec);
+            string response2 = Datagram.ToString(bytes, bytesRec);
             socket.Close();
         }
     }

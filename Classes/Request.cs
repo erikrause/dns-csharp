@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public abstract class Request
+    public abstract class Datagram
     {
         public readonly byte[] Data;
 
-        public Request(byte[] data)
+        public Datagram(byte[] data)
         {
             Data = data;
         }
