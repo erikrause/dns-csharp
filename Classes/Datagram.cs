@@ -65,7 +65,7 @@ namespace dnc_csharp.Classes
                              .ToArray();
         }
 
-        public static string ToString(byte[] bytes, int count = -1)
+        public static string ToHex(byte[] bytes, int count = -1)
         {
             if (count == -1)
             {
@@ -75,6 +75,16 @@ namespace dnc_csharp.Classes
             string result = BitConverter.ToString(bytes.Take(count).ToArray());
 
             return result.Replace("-", "");
+        }
+
+        public static string ToString(byte[] bytes, int count = -1)
+        {
+            if (count == -1)
+            {
+                count = bytes.Length;
+            }
+            var prob = bytes.Take(count).ToArray();
+            return Encoding.UTF8.GetString(bytes.Take(count).ToArray()).TrimEnd('\0'); ;
         }
     }
 }

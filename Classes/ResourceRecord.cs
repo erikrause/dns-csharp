@@ -1,14 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class ResourceRecord : Record
+    public class ResourceRecord : Datagram
     {
         public ResourceRecord(byte[] data) : base(data)
         {
 
+        }
+        protected int NameEnd;
+        public string NAME
+        {
+            get
+            {
+                return ToString(Data.Take(NameEnd - 1).ToArray());
+            }
+        }
+        public int TYPE
+        {
+            get
+            {
+                return GetDataInt(NameEnd);
+            }
+        }
+        public int CLASS
+        {
+            get
+            {
+                return GetDataInt(NameEnd + 2);
+            }
         }
 
         public int TTL

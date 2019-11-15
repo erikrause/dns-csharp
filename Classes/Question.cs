@@ -9,7 +9,7 @@ namespace dnc_csharp.Classes
     {
         public Question(byte[] data, int numberOfRecords) : base(data)
         {
-            Records = new List<Record>(numberOfRecords);
+            Queryes = new List<Query>(numberOfRecords);
             InitializeRecords(numberOfRecords);
         }
 
@@ -24,12 +24,12 @@ namespace dnc_csharp.Classes
                 endByte = endByte + 4;  // Add 2 type & class bytes;
                 endByte = endByte + 1;
 
-                var rec = new Record(Data.Skip(startByte).Take(endByte).ToArray());
-                Records.Insert(rn,rec);
+                var rec = new Query(Data.Skip(startByte).Take(endByte).ToArray());
+                Queryes.Insert(rn,rec);
 
-                startByte = endByte;    // debug
+                startByte = endByte;    // need to debug
             }              
         }
-        private List<Record> Records;
+        public List<Query> Queryes;
     }
 }
