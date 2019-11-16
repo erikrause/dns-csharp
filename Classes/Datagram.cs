@@ -15,7 +15,7 @@ namespace dnc_csharp.Classes
             Data = data;
         }
 
-        public int IndexOf(byte[] data, int value, int startByte = 0)
+        public static int IndexOf(byte[] data, int value, int startByte = 0)
         {
             int i = startByte;
             byte byteData;

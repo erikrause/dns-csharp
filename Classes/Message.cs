@@ -9,12 +9,13 @@ namespace dnc_csharp.Classes
         public Message(byte[] data) : base(data)
         {
             Header = new Header(DataRange(0, 12));
-            int questionSize = GetQuestionSize(Header.QDCOUNT);
-            Question = new Question(DataRange(12, questionSize), Header.QDCOUNT);
-            //Answer = new ResourseRequest(data);
+            int questionSize = GetRecordSize(Header.QDCOUNT);
+            Questions = new Questions(DataRange(12, questionSize), Header.QDCOUNT);
+            int answerSize = GetRecordSize(Header.ANCOUNT);
+            Answers = new Answers(DataRange(12 + questionSize, answerSize), Header.ANCOUNT);
         }
 
-        private int GetQuestionSize(int numberOfRecords)
+        private int GetRecordSize(int numberOfRecords)
         {
             int startByte = 12;
             int i = -1;
@@ -30,7 +31,7 @@ namespace dnc_csharp.Classes
         }
 
         public Header Header;
-        public Question Question;
-        //public ResourseRequest Answer;
+        public Data<Query> Questions;
+        public Answers Answers;
     }
 }
