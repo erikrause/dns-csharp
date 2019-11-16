@@ -11,7 +11,19 @@ namespace dnc_csharp.Classes
             Field = GetDataInt();
         }
 
-        protected int Field;
+        protected int _field;
+        protected int Field
+        {
+            get
+            {
+                return _field;
+            }
+            set
+            {
+                _field = value;
+                SetData(0, ToBytes((ushort)_field));
+            }
+        }
                
         protected int GetValue(int mask)
         {
@@ -24,8 +36,13 @@ namespace dnc_csharp.Classes
             }
             return flag;
         }
-        protected void SetValue(int mask)
+        protected void SetValue(int value, int mask)
         {
+            int digits = GetDigit(mask);
+            value <<= digits;
+
+            Field &= ~mask;      // reset old value;
+            Field |= value;      // set new value.
         }
         /// <summary>
         /// Возвращает количество нулей справа в маске.
@@ -53,7 +70,8 @@ namespace dnc_csharp.Classes
             }
             set
             {
-
+                int mask = 0b1000_0000_0000_0000;
+                SetValue(value, mask);
             }
         }
         public int OPCODE
@@ -63,6 +81,11 @@ namespace dnc_csharp.Classes
                 int mask = 0b0111_1000_0000_0000;
                 return GetValue(mask);
             }
+            set
+            {
+                int mask = 0b0111_1000_0000_0000;
+                SetValue(value, mask);
+            }
         }
         public int AA
         {
@@ -70,6 +93,11 @@ namespace dnc_csharp.Classes
             {
                 int mask = 0b0000_0100_0000_0000;
                 return GetValue(mask);
+            }
+            set
+            {
+                int mask = 0b0000_0100_0000_0000;
+                SetValue(value, mask);
             }
         }
         public int TC
@@ -79,6 +107,11 @@ namespace dnc_csharp.Classes
                 int mask = 0b0000_0010_0000_0000;
                 return GetValue(mask);
             }
+            set
+            {
+                int mask = 0b0000_0010_0000_0000;
+                SetValue(value, mask);
+            }
         }
         public int RD
         {
@@ -86,6 +119,11 @@ namespace dnc_csharp.Classes
             {
                 int mask = 0b0000_0001_0000_0000;
                 return GetValue(mask);
+            }
+            set
+            {
+                int mask = 0b0000_0001_0000_0000;
+                SetValue(value, mask);
             }
         }
         public int RA
@@ -95,6 +133,11 @@ namespace dnc_csharp.Classes
                 int mask = 0b0000_0000_1000_0000;
                 return GetValue(mask);
             }
+            set
+            {
+                int mask = 0b0000_0000_1000_0000;
+                SetValue(value, mask);
+            }
         }
         public int Z
         {
@@ -103,6 +146,11 @@ namespace dnc_csharp.Classes
                 int mask = 0b0000_0000_0111_0000;
                 return GetValue(mask);
             }
+            set
+            {
+                int mask = 0b0000_0000_0111_0000;
+                SetValue(value, mask);
+            }
         }
         public int RCODE
         {
@@ -110,6 +158,11 @@ namespace dnc_csharp.Classes
             {
                 int mask = 0b0000_0000_0000_1111;
                 return GetValue(mask);
+            }
+            set
+            {
+                int mask = 0b0000_0000_0000_1111;
+                SetValue(value, mask);
             }
         }
     }

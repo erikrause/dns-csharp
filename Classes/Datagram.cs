@@ -10,7 +10,7 @@ namespace dnc_csharp.Classes
 {
     public abstract class Datagram : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;   // Не используется.
+        public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] String propertyName = "")
         {
@@ -27,7 +27,7 @@ namespace dnc_csharp.Classes
             protected set
             {
                 _data = value;
-                OnPropertyChanged();
+                OnPropertyChanged();    // not working when changing elements in array. Need to implement IObservable?
             }
         }
         public Datagram()
@@ -73,6 +73,7 @@ namespace dnc_csharp.Classes
                 Data[i] = b;
                 i++;
             }
+            OnPropertyChanged();        // Need to implement IObservable in Data array instead this code.
         }
         protected string GetDataString(int startByte = 0, int numberOfBytes = 2)
         {

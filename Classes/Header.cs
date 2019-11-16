@@ -6,14 +6,17 @@ namespace dnc_csharp.Classes
 {
     public class Header : Datagram
     {
-        public Header()
+        public Header() : this(new byte[12])
         {
-            byte[] data = new byte[12];
-            Data = data;
         }
         public Header(byte[] data) : base(data)
         {
             Flags = new Flags(DataRange(2, 2));
+            Flags.PropertyChanged += OnFlagsChanged;
+        }
+        protected void OnFlagsChanged(object sender, EventArgs e)
+        {
+            SetData(2, Flags.Data);
         }
         public ushort ID
         {

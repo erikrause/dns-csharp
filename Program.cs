@@ -46,6 +46,9 @@ namespace dnc_csharp
             Query query = new Query("example.com", 1);
 
             Message prob = new Message(query);
+            prob.Header.Flags.QR = 1;
+            prob.Header.Flags.RD = 1;
+            prob.Header.Flags.RA = 1;
         }
     }
 }

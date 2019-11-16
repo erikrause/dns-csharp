@@ -19,15 +19,8 @@ namespace dnc_csharp.Classes
             data.AddRange(Header.Data);
             data.AddRange(Question.Data);
             Data = data.ToArray();
-        }
 
-        protected Data<Query> InitializeQuestion(Query[] queryes)
-        {
-            var question = new Data<Query>(queryes);
-
-            Header.QDCOUNT = (ushort)question.Records.Count;
-
-            return question;
+            InitializeHandlers();
         }
         public Message(byte[] data) : base(data)
         {
@@ -40,6 +33,41 @@ namespace dnc_csharp.Classes
             int answerStartByte = 12 + questionSize;
             int answerSize = GetAnswerSize(answerStartByte, Header.ANCOUNT);
             Answer = new Data<ResourceRecord>(DataRange(answerStartByte, answerSize), Header.ANCOUNT);
+
+            InitializeHandlers();
+        }
+        protected void InitializeHandlers()
+        {
+            Header.PropertyChanged += OnDataChanged;
+            Question.PropertyChanged += OnDataChanged;
+            Answer.PropertyChanged += OnDataChanged;
+        }
+        protected void OnDataChanged(object sender, EventArgs e)
+        {
+            int startByte = 0;
+            
+            if (sender is Header)
+            {
+                startByte = 0;
+            }
+            else if (sender is Data<Query>)
+            {
+                startByte = 12;
+            }
+            else if (sender is Data<ResourceRecord>)
+            {
+                startByte = 12 + Question.Data.Length;
+            }
+
+            SetData(startByte, ((Datagram)sender).Data);
+        }
+        protected Data<Query> InitializeQuestion(Query[] queryes)
+        {
+            var question = new Data<Query>(queryes);
+
+            Header.QDCOUNT = (ushort)question.Records.Count;
+
+            return question;
         }
 
         protected int GetQuestionSize(int startByte, int numberOfRecords)
@@ -70,8 +98,8 @@ namespace dnc_csharp.Classes
             return dLength;
         }
 
-        public Header Header;
-        public Data<Query> Question;
-        public Data<ResourceRecord> Answer;
+        public Header Header = new Header();
+        public Data<Query> Question = new Data<Query>();
+        public Data<ResourceRecord> Answer = new Data<ResourceRecord>();
     }
 }

@@ -7,9 +7,13 @@ namespace dnc_csharp.Classes
 {
     public class Data<T> : Datagram where T : Record
     {
+        public Data() : this(new Query[] { })
+        {
+
+        }
         public Data(Query[] queryes)
         {
-            Records = new List<T>(queryes.Length);
+            Records = new List<T>();
 
             var data = new List<byte>();
 
@@ -27,7 +31,7 @@ namespace dnc_csharp.Classes
         }
         protected List<T> InitializeRecords(byte[] data, int numberOfRecords)
         {
-            List<T> records = new List<T>(numberOfRecords);
+            List<T> records = new List<T>();
             int startIndex = 0;
             int endIndex = 0;
 
