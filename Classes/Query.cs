@@ -5,14 +5,20 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class Query : Datagram
+    public class Query : Record
     {
         public Query(byte[] data) : base(data)
         {
-            NameEnd = IndexOf(Data, 0, 0) + 1;
+            //NameEnd = IndexOf(Data, 0, 0) + 1;
         }
-        protected int NameEnd;
-        public string NAME
+        protected override int NameEnd
+        {
+            get
+            {
+                return IndexOf(Data, 0, 0) + 1;
+            }
+        }
+        public override string NAME
         {
             get
             {
@@ -32,19 +38,10 @@ namespace dnc_csharp.Classes
                 return name;
             }
         }
-        public int TYPE
+
+        public static new void GetDataLength(byte[] data)
         {
-            get
-            {
-                return GetDataInt(NameEnd);
-            }
-        }
-        public int CLASS
-        {
-            get
-            {
-                return GetDataInt(NameEnd + 2);
-            }
+
         }
     }
 }

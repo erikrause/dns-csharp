@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class ResourceRecord : Query
+    public class ResourceRecord : Record
     {
         public ResourceRecord(byte[] data) : base(data)
         {
@@ -16,7 +16,8 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                return GetDataInt(NameEnd + 4, 4);
+                var prob = ToHex(DataRange(NameEnd + 6, 2));
+                return GetDataInt(NameEnd + 6, 2);
             }
         }
 
@@ -28,11 +29,12 @@ namespace dnc_csharp.Classes
             }
         }
 
-        public string RDATA
+        public byte[] RDATA
         {
             get
             {
-                return GetDataString(NameEnd + 10, RDLENGTH);
+                //return GetDataString(NameEnd + 10, RDLENGTH);
+                return DataRange(NameEnd + 10, RDLENGTH);
             }
         }
     }

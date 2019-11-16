@@ -5,32 +5,55 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class Data<T> : Datagram where T : Query
+    public class Data<T> : Datagram where T : Record
     {
         public Data(byte[] data, int numberOfRecords) : base(data)
         {
-            Records = new List<T>(numberOfRecords);
-            InitializeRecords(data, numberOfRecords);
+            Records = InitializeRecords(data, numberOfRecords);
+
         }
-        private void InitializeRecords(byte[] data, int numberOfRecords)
+        protected List<T> InitializeRecords(byte[] data, int numberOfRecords)
         {
-            int startByte = 0;
-            int endByte;
+            List<T> records = new List<T>(numberOfRecords);
+            int startIndex = 0;
+            int endIndex = 0;
 
-            for (int rn = 0; rn < numberOfRecords; rn++)
+            if (typeof(T) == typeof(Query))
             {
-                endByte = IndexOf(data, 0, startByte);
-                endByte = endByte + 4;  // Add 2 type & class bytes;
-                endByte = endByte + 1;
+                for (int rn = 0; rn < numberOfRecords; rn++)
+                {
+                    endIndex = IndexOf(data, 0, startIndex);
+                    endIndex = endIndex + 4;  // Add 2 type & class bytes;
+                    endIndex = endIndex + 1;
 
-                //var rec = new T(data.Skip(startByte).Take(endByte).ToArray());
-                var arg = data.Skip(startByte).Take(endByte).ToArray();
-                T rec = (T)Activator.CreateInstance(typeof(T), arg);
-                Records.Insert(rn, rec);
+                    //var rec = new T(data.Skip(startIndex).Take(endIndex).ToArray());
+                    var arg = data.Skip(startIndex).Take(endIndex).ToArray();
+                    T rec = (T)Activator.CreateInstance(typeof(T), arg);
+                    records.Insert(rn, rec);
 
-                startByte = endByte;    // need to debug
+                    startIndex = endIndex;
+                }
             }
+            if (typeof(T) == typeof(ResourceRecord))
+            {
+                for (int rn = 0; rn < numberOfRecords; rn++)
+                {
+                    int rLengthIndex = 10 + startIndex;
+                    int rLength = GetDataInt(rLengthIndex) + 10 + 1;
+                    endIndex = rLength + 1;
+
+                    var arg = data.Skip(startIndex).Take(endIndex).ToArray();
+                    T rec = (T)Activator.CreateInstance(typeof(T), arg);
+                    records.Insert(rn, rec);
+
+                    startIndex = endIndex;
+                }
+            }
+            
+
+            return records;
         }
+
         public List<T> Records;
     }
 }

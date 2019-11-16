@@ -21,7 +21,7 @@ namespace dnc_csharp
             // DEGUG:
             Message request = new Message(msg);
             var prob = request.Header.Flags.RD;
-            var prob2 = request.Questions.Records[0].NAME;
+            var prob2 = request.Question.Records[0].NAME;
             ///////////////
 
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
@@ -31,8 +31,13 @@ namespace dnc_csharp
 
             byte[] bytes = new byte[4096];
             int bytesRec = socket.Receive(bytes);
-            string response = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+            string response1 = Encoding.UTF8.GetString(bytes, 0, bytesRec);
             string response2 = Datagram.ToString(bytes, bytesRec);
+            var prob3 = bytes.Take(bytesRec).ToArray();
+            Message response = new Message(prob3);
+            var prob5 = response.Answer.Records[0].NAME;
+            var prob6 = response.Answer.Records[0].TTL;
+            var prob7 = response.Answer.Records[0].RDLENGTH;
             socket.Close();
         }
     }
