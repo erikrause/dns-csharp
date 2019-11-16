@@ -7,10 +7,42 @@ namespace dnc_csharp.Classes
 {
     public class Query : Record
     {
+        public Query(string domainName, ushort domainType) : base()
+        {
+            List<byte> data = new List<byte>();
+            List<byte> nameInBytes = new List<byte>(NameToBytes(domainName));
+            data.AddRange(nameInBytes);
+
+            // Data pre-initialization (without TYPE and CLASS) for NameEnd getter.
+            Data = new byte[data.Count + 4];
+            data.CopyTo(Data);
+
+            TYPE = domainType;
+            CLASS = 1;
+        }
         public Query(byte[] data) : base(data)
         {
-            //NameEnd = IndexOf(Data, 0, 0) + 1;
         }
+        protected byte[] NameToBytes(string name)
+        {
+
+            int startIndex = 0;
+            List<byte> bytes = new List<byte>();
+            while (startIndex < name.Length)
+            {
+                string probStr = "hellomy";
+                var probQ = probStr.TakeWhile(ch => ch != 'o').ToArray();
+                string domain = new string(name.Skip(startIndex).TakeWhile(ch => ch != '.').ToArray());
+                bytes.Add((byte)domain.Count());
+                byte[] domainBytes = ToBytes(domain);
+                bytes.AddRange(domainBytes);
+                startIndex = bytes.Count;
+            }
+            bytes.Add(0);   // Add zero byte to end of Name.
+
+            return bytes.ToArray();
+        }
+
         protected override int NameEnd
         {
             get
@@ -37,11 +69,11 @@ namespace dnc_csharp.Classes
 
                 return name;
             }
-        }
-
-        public static new void GetDataLength(byte[] data)
-        {
-
+            set
+            {
+                byte[] data = ToBytes(value);
+                SetData(NameEnd + 2, data);
+            }
         }
     }
 }

@@ -6,6 +6,10 @@ namespace dnc_csharp.Classes
 {
     public abstract class Record : Datagram
     {
+        public Record() : base()
+        {
+
+        }
         public Record(byte[] data) : base(data)
         {
 
@@ -23,27 +27,40 @@ namespace dnc_csharp.Classes
             {
                 return GetDataString(0, NameEnd);
             }
+            set
+            {
+
+            }
+            //{
+                //byte[] data = ToBytes(value);
+                //SetData(NameEnd + 2, data);
+            //}
         }
 
-        public int TYPE
+        public ushort TYPE
         {
             get
             {
                 return GetDataInt(NameEnd);
             }
+            set
+            {
+                byte[] data = ToBytes(value);
+                SetData(NameEnd, data);
+            }
         }
 
-        public int CLASS
+        public ushort CLASS
         {
             get
             {
                 return GetDataInt(NameEnd + 2);
             }
-        }
-
-        public static void GetDataLength(byte[] data)
-        {
-
+            set
+            {
+                byte[] data = ToBytes(value);
+                SetData(NameEnd + 2, data);
+            }
         }
     }
 }

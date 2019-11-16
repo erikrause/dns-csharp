@@ -7,10 +7,13 @@ namespace dnc_csharp.Classes
 {
     public class Data<T> : Datagram where T : Record
     {
+        public Data(int numberOfRecords)
+        {
+            Records = new List<T>(numberOfRecords);
+        }
         public Data(byte[] data, int numberOfRecords) : base(data)
         {
             Records = InitializeRecords(data, numberOfRecords);
-
         }
         protected List<T> InitializeRecords(byte[] data, int numberOfRecords)
         {

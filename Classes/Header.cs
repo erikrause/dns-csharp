@@ -10,8 +10,6 @@ namespace dnc_csharp.Classes
         {
             byte[] data = new byte[12];
             Data = data;
-            ID = 1;
-
         }
         public Header(byte[] data) : base(data)
         {
@@ -25,7 +23,7 @@ namespace dnc_csharp.Classes
             }
             set
             {
-                byte[] data = GetBytes(value);
+                byte[] data = ToBytes(value);
                 SetData(0, data);
             }
         }
@@ -40,7 +38,7 @@ namespace dnc_csharp.Classes
             }
             set
             {
-                byte[] data = GetBytes(value);
+                byte[] data = ToBytes(value);
                 SetData(4, data);
             }
         }
@@ -55,7 +53,7 @@ namespace dnc_csharp.Classes
             }
             set
             {
-                byte[] data = GetBytes(value);
+                byte[] data = ToBytes(value);
                 SetData(6, data);
             }
         }
@@ -70,7 +68,7 @@ namespace dnc_csharp.Classes
             }
             set
             {
-                byte[] data = GetBytes(value);
+                byte[] data = ToBytes(value);
                 SetData(8, data);
             }
         }
@@ -85,7 +83,7 @@ namespace dnc_csharp.Classes
             }
             set
             {
-                byte[] data = GetBytes(value);
+                byte[] data = ToBytes(value);
                 SetData(10, data);
             }
         }

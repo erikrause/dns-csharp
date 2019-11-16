@@ -71,10 +71,15 @@ namespace dnc_csharp.Classes
             return (ushort)BitConverter.ToInt16(byteArray);
         }
 
-        protected byte[] GetBytes(ushort data)
+        protected byte[] ToBytes(ushort data)
         {
             byte[] byteArray = BitConverter.GetBytes(data);
             Array.Reverse(byteArray);
+            return byteArray;
+        }
+        protected byte[] ToBytes(string data)
+        {
+            byte[] byteArray = Encoding.UTF8.GetBytes(data);    // Check vs BitConverter.
             return byteArray;
         }
 

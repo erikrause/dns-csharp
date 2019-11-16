@@ -6,13 +6,23 @@ namespace dnc_csharp.Classes
 {
     public class Message : Datagram
     {
-        public Message(string domainName, string queryType)
+        public Message(Query[] queryes)
         {
             byte[] data;
 
             Header = new Header();
+            Question = new Data<Query>(queryes.Length);
 
+            InitializeQuestion(queryes);
             //Data = data;
+        }
+
+        protected void InitializeQuestion(Query[] queryes)
+        {
+            foreach(Query query in queryes)
+            {
+                Question.Records.Add(query);
+            }
         }
         public Message(byte[] data) : base(data)
         {

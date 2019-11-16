@@ -22,6 +22,7 @@ namespace dnc_csharp
             Message request = new Message(msg);
             var prob1 = request.Header.Flags.RD;
             var prob2 = request.Question.Records[0].NAME;
+            var prob3 = request.Question.Records[0].CLASS;
             ///////////////
 
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
@@ -39,7 +40,11 @@ namespace dnc_csharp
 
             socket.Close();
 
-            Message prob = new Message("domain", "type");
+            string[] domains = { "domain" };
+            string[] types = { "type" };
+            Query query = new Query("example.com", 1);
+
+            //Message prob = new Message(domains, types);
         }
     }
 }
