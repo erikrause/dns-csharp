@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public abstract class Data<T> : Datagram where T : Record, new()
+    public class Data<T> : Datagram where T : Query
     {
         public Data(byte[] data, int numberOfRecords) : base(data)
         {
@@ -26,23 +26,11 @@ namespace dnc_csharp.Classes
                 //var rec = new T(data.Skip(startByte).Take(endByte).ToArray());
                 var arg = data.Skip(startByte).Take(endByte).ToArray();
                 T rec = (T)Activator.CreateInstance(typeof(T), arg);
-                _records.Insert(rn, rec);
+                Records.Insert(rn, rec);
 
                 startByte = endByte;    // need to debug
             }
         }
-        protected List<T> _records;
-        public abstract List<T> Records
-        {
-            get;
-            set;
-        }
-    }
-    public class MyClass<T> where T : Record, new()
-    {
-        protected T GetObject(byte[] data)
-        {
-            return (T)Activator.CreateInstance(typeof(T), 0);
-        }
+        public List<T> Records;
     }
 }

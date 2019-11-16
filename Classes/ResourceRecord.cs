@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace dnc_csharp.Classes
 {
-    public class ResourceRecord : Record
+    public class ResourceRecord : Query
     {
         public ResourceRecord(byte[] data) : base(data)
         {

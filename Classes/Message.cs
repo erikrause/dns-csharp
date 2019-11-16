@@ -10,9 +10,9 @@ namespace dnc_csharp.Classes
         {
             Header = new Header(DataRange(0, 12));
             int questionSize = GetRecordSize(Header.QDCOUNT);
-            Questions = new Questions(DataRange(12, questionSize), Header.QDCOUNT);
+            Questions = new Data<Query>(DataRange(12, questionSize), Header.QDCOUNT);
             int answerSize = GetRecordSize(Header.ANCOUNT);
-            Answers = new Answers(DataRange(12 + questionSize, answerSize), Header.ANCOUNT);
+            Answers = new Data<ResourceRecord>(DataRange(12 + questionSize, answerSize), Header.ANCOUNT);
         }
 
         private int GetRecordSize(int numberOfRecords)
@@ -32,6 +32,6 @@ namespace dnc_csharp.Classes
 
         public Header Header;
         public Data<Query> Questions;
-        public Answers Answers;
+        public Data<ResourceRecord> Answers;
     }
 }
