@@ -6,11 +6,13 @@ namespace dnc_csharp.Classes
 {
     public class Message : Datagram
     {
-        public Message()
+        public Message(string domainName, string queryType)
         {
             byte[] data;
 
+            Header = new Header();
 
+            //Data = data;
         }
         public Message(byte[] data) : base(data)
         {

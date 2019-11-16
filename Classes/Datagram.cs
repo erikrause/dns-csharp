@@ -49,18 +49,33 @@ namespace dnc_csharp.Classes
 
             return byteList.ToArray();
         }
-
+        protected void SetData(int startByte, byte[] data)
+        {
+            int i = startByte;
+            foreach(byte b in data)
+            {
+                Data[i] = b;
+                i++;
+            }
+        }
         protected string GetDataString(int startByte = 0, int numberOfBytes = 2)
         {
             byte[] byteArray = DataRange(startByte, numberOfBytes);
             return ToString(byteArray);
         }
 
-        protected int GetDataInt(int startByte = 0, int numberOfBytes = 2)
+        protected ushort GetDataInt(int startByte = 0, int numberOfBytes = 2)
         {
             byte[] byteArray = DataRange(startByte, numberOfBytes);
             Array.Reverse(byteArray);
-            return BitConverter.ToInt16(byteArray);
+            return (ushort)BitConverter.ToInt16(byteArray);
+        }
+
+        protected byte[] GetBytes(ushort data)
+        {
+            byte[] byteArray = BitConverter.GetBytes(data);
+            Array.Reverse(byteArray);
+            return byteArray;
         }
 
         public static byte[] ToByteArray(string hex)

@@ -20,7 +20,7 @@ namespace dnc_csharp
 
             // DEGUG:
             Message request = new Message(msg);
-            var prob = request.Header.Flags.RD;
+            var prob1 = request.Header.Flags.RD;
             var prob2 = request.Question.Records[0].NAME;
             ///////////////
 
@@ -38,6 +38,8 @@ namespace dnc_csharp
             Message response = new Message(data);
 
             socket.Close();
+
+            Message prob = new Message("domain", "type");
         }
     }
 }
