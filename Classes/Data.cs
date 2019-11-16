@@ -7,9 +7,19 @@ namespace dnc_csharp.Classes
 {
     public class Data<T> : Datagram where T : Record
     {
-        public Data(int numberOfRecords)
+        public Data(Query[] queryes)
         {
-            Records = new List<T>(numberOfRecords);
+            Records = new List<T>(queryes.Length);
+
+            var data = new List<byte>();
+
+            foreach(Record rec in queryes)
+            {
+                Records.Add((T)rec);
+                data.AddRange(rec.Data);
+            }
+
+            Data = data.ToArray();
         }
         public Data(byte[] data, int numberOfRecords) : base(data)
         {
@@ -56,7 +66,20 @@ namespace dnc_csharp.Classes
 
             return records;
         }
-
         public List<T> Records;
+            //Need to implement IObservable? to do dynamic setter!
+            //set
+            //{
+               // _records = value;
+
+                // Update Data:
+                //var data = new List<byte>();
+                //foreach (T record in _records)
+                //{
+                //   data.AddRange(record.Data);
+                //}
+
+                //Data = data.ToArray();
+            //}
     }
 }

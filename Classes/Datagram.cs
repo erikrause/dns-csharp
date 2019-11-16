@@ -2,22 +2,38 @@
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
+using System.Collections.Specialized;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace dnc_csharp.Classes
 {
-    public abstract class Datagram
+    public abstract class Datagram : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;   // Не используется.
+
+        protected void OnPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected byte[] _data;
         public byte[] Data
         {
-            get;
-            protected set;
+            get
+            {
+                return _data;
+            }
+            protected set
+            {
+                _data = value;
+                OnPropertyChanged();
+            }
         }
         public Datagram()
         {
-
         }
-        public Datagram(byte[] data)
+        public Datagram(byte[] data) : this()
         {
             Data = data;
         }

@@ -44,7 +44,7 @@ namespace dnc_csharp
             string[] types = { "type" };
             Query query = new Query("example.com", 1);
 
-            //Message prob = new Message(domains, types);
+            Message prob = new Message(query);
         }
     }
 }

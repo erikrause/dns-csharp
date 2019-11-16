@@ -6,23 +6,28 @@ namespace dnc_csharp.Classes
 {
     public class Message : Datagram
     {
+        public Message(Query query) : this(new Query[]{ query })
+        {
+        }
         public Message(Query[] queryes)
         {
-            byte[] data;
+            List<byte> data = new List<byte>();
 
             Header = new Header();
-            Question = new Data<Query>(queryes.Length);
+            Question = InitializeQuestion(queryes);
 
-            InitializeQuestion(queryes);
-            //Data = data;
+            data.AddRange(Header.Data);
+            data.AddRange(Question.Data);
+            Data = data.ToArray();
         }
 
-        protected void InitializeQuestion(Query[] queryes)
+        protected Data<Query> InitializeQuestion(Query[] queryes)
         {
-            foreach(Query query in queryes)
-            {
-                Question.Records.Add(query);
-            }
+            var question = new Data<Query>(queryes);
+
+            Header.QDCOUNT = (ushort)question.Records.Count;
+
+            return question;
         }
         public Message(byte[] data) : base(data)
         {
