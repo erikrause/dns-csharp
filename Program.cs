@@ -22,7 +22,7 @@ namespace dnc_csharp
             Message request = new Message(msg);
             var prob1 = request.Header.Flags.RD;
             var prob2 = request.Question.Records[0].NAME;
-            var prob3 = request.Question.Records[0].CLASS;
+            
             ///////////////
 
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
@@ -37,6 +37,7 @@ namespace dnc_csharp
 
             var data = bytes.Take(bytesRec).ToArray();
             Message response = new Message(data);
+            var prob3 = request.Header.Flags.OPCODE;    //debug
 
             socket.Close();
 

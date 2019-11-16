@@ -16,14 +16,32 @@ namespace dnc_csharp.Classes
         protected int GetValue(int mask)
         {
             int flag = Field & mask;
-
             // Убрает нули в флаге справа:
             if (flag > 0)
             {
-                int digits = Convert.ToInt32(Math.Log(flag, 2));
+                int digits = GetDigit(mask);
                 flag >>= digits;
             }
             return flag;
+        }
+        protected void SetValue(int mask)
+        {
+        }
+        /// <summary>
+        /// Возвращает количество нулей справа в маске.
+        /// </summary>
+        /// <returns></returns>
+        protected int GetDigit(int mask)
+        {
+            int prob = 0b0001;
+
+            int digits = 0;
+            while ((prob & mask) != 1)
+            {
+                digits++;
+                mask >>= 1;
+            }
+            return digits;
         }
 
         public int QR
@@ -32,6 +50,10 @@ namespace dnc_csharp.Classes
             {
                 int mask = 0b1000_0000_0000_0000;
                 return GetValue(mask);
+            }
+            set
+            {
+
             }
         }
         public int OPCODE
