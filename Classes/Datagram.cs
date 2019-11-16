@@ -8,8 +8,15 @@ namespace dnc_csharp.Classes
 {
     public abstract class Datagram
     {
-        public readonly byte[] Data;
+        public byte[] Data
+        {
+            get;
+            protected set;
+        }
+        public Datagram()
+        {
 
+        }
         public Datagram(byte[] data)
         {
             Data = data;
