@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "dnc-csharp": {
+      "commandName": "Project",
+      "commandLineArgs": "8.8.8.8 example.com TXT"
+    }
+  }
+}

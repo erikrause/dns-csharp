@@ -6,7 +6,7 @@ namespace dnc_csharp.Classes
 {
     public abstract class Record : Datagram
     {
-        public Record() : base()
+        public Record() : this(new byte[] { })
         {
 
         }
@@ -62,5 +62,16 @@ namespace dnc_csharp.Classes
                 SetData(NameEnd + 2, data);
             }
         }
+        public static Dictionary<string, int> Types = new Dictionary<string, int>()
+        {
+            { "A", 1 },
+            { "AAAA", 28 },
+            { "CNAME", 5 },
+            { "MX", 15 },
+            { "NS", 2 },
+            { "PTR", 12 },
+            { "SOA", 6},
+            { "TXT", 16 }
+        };
     }
 }

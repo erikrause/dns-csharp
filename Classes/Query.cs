@@ -7,6 +7,9 @@ namespace dnc_csharp.Classes
 {
     public class Query : Record
     {
+        public Query(string domainName, string domainType) : this(domainName, (ushort)Types[domainType])
+        {
+        }
         public Query(string domainName, ushort domainType) : base()
         {
             List<byte> data = new List<byte>();
@@ -30,8 +33,6 @@ namespace dnc_csharp.Classes
             List<byte> bytes = new List<byte>();
             while (startIndex < name.Length)
             {
-                string probStr = "hellomy";
-                var probQ = probStr.TakeWhile(ch => ch != 'o').ToArray();
                 string domain = new string(name.Skip(startIndex).TakeWhile(ch => ch != '.').ToArray());
                 bytes.Add((byte)domain.Count());
                 byte[] domainBytes = ToBytes(domain);

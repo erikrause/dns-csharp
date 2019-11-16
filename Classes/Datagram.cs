@@ -127,7 +127,7 @@ namespace dnc_csharp.Classes
             {
                 count = bytes.Length;
             }
-            return Encoding.UTF8.GetString(bytes.Take(count).ToArray()).TrimEnd('\0'); ;
+            return Encoding.UTF8.GetString(bytes.Take(count).ToArray());//.TrimEnd('\0'); ;
         }
     }
 }

@@ -12,6 +12,17 @@ namespace dnc_csharp.Classes
 
         }
 
+        public override string NAME
+        {
+            get
+            {
+                int nameField = GetDataInt(0, NameEnd);
+                int nameShift = nameField - (0b11 << 14);
+
+                return nameShift.ToString();
+            }
+        }
+
         public int TTL
         {
             get
