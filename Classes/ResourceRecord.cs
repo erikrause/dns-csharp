@@ -16,7 +16,6 @@ namespace dnc_csharp.Classes
         {
             get
             {
-                var prob = ToHex(DataRange(NameEnd + 6, 2));
                 return GetDataInt(NameEnd + 6, 2);
             }
         }

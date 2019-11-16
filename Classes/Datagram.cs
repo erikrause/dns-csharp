@@ -83,7 +83,6 @@ namespace dnc_csharp.Classes
             {
                 count = bytes.Length;
             }
-            var prob = bytes.Take(count).ToArray();
             return Encoding.UTF8.GetString(bytes.Take(count).ToArray()).TrimEnd('\0'); ;
         }
     }

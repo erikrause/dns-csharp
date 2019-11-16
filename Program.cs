@@ -31,13 +31,12 @@ namespace dnc_csharp
 
             byte[] bytes = new byte[4096];
             int bytesRec = socket.Receive(bytes);
-            string response1 = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-            string response2 = Datagram.ToString(bytes, bytesRec);
-            var prob3 = bytes.Take(bytesRec).ToArray();
-            Message response = new Message(prob3);
-            var prob5 = response.Answer.Records[0].NAME;
-            var prob6 = response.Answer.Records[0].TTL;
-            var prob7 = response.Answer.Records[0].RDLENGTH;
+            string response1 = Encoding.UTF8.GetString(bytes, 0, bytesRec);     //debug
+            string response2 = Datagram.ToString(bytes, bytesRec);      //debug
+
+            var data = bytes.Take(bytesRec).ToArray();
+            Message response = new Message(data);
+
             socket.Close();
         }
     }
