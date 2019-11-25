@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public class Query : Record
     {

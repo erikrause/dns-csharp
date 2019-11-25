@@ -6,7 +6,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public abstract class Datagram : INotifyPropertyChanged
     {

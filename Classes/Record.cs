@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public abstract class Record : Datagram
     {
@@ -68,6 +68,7 @@ namespace dnc_csharp.Classes
             { "AAAA", 28 },
             { "CNAME", 5 },
             { "MX", 15 },
+            { "SRV", 33 },
             { "NS", 2 },
             { "PTR", 12 },
             { "SOA", 6},

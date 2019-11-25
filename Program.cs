@@ -4,18 +4,20 @@ using System.Net;
 using System.Net.Sockets;
 using System.Linq;
 
-using dnc_csharp.Classes;
+using dns_csharp.Classes;
 
-namespace dnc_csharp
+namespace dns_csharp
 {
     class Program
     {
         static void Main(string[] args)
         {
             // DEBUG
-            string debugMessage = "BB AA 01 00 00 01 00 00 00 00 00 00 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 00 01 00 01";
-            byte[] debugMsg = Datagram.ToByteArray(debugMessage);
+            //string debugMessage = "BB AA 01 00 00 01 00 00 00 00 00 00 07 65 78 61 6d 70 6c 65 03 63 6f 6d 00 00 01 00 01";
+            //byte[] debugMsg = Datagram.ToByteArray(debugMessage);
             ////////
+
+            #region Установка параметров сообщения
 
             string dnsAddress = args[0];
             string domainName = args[1];
@@ -27,28 +29,34 @@ namespace dnc_csharp
 
             // Параметры заголовка:
             request.Header.ID = 101;
-            request.Header.Flags.RD = 1;        // Включить рекурсию.
+            request.Header.Flags.RD = 1;    // Включить рекурсию.
 
-            // Установление соединения с DNS сервером:
+            #endregion
+
+            #region Установление соединения с DNS сервером и отправка сообщения
+
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
             IPAddress ipAddr = ipHost.AddressList[0]; 
             EndPoint ipEndPoint = new IPEndPoint(ipAddr, dnsPort);
-            //////////////////////////////////////////
-            
             socket.SendTo(request.Data, ipEndPoint);
 
-            // Прием сообщения с сервера:
+            #endregion
+
+            #region Прием ответа с сервера
+
             byte[] bytes = new byte[4096];
             int bytesRec = socket.Receive(bytes);
             var data = bytes.Take(bytesRec).ToArray();
 
+            #endregion
+
+            #region Output to console
+
             var response = new Message(data);
             PrintAnswer(response);
 
-            var probData = response.Answer.Records[0].RDATA;
-            var prob = Encoding.UTF8.GetString(probData).TrimEnd('\0');     //debug
-            var prob2 = BitConverter.ToString(probData);
+            #endregion
 
             socket.Close();
         }
@@ -111,7 +119,7 @@ namespace dnc_csharp
                     {
                         output += b.ToString() + '.';
                     }
-                    output.Remove(output.Length - 1);   // delete last dot.
+                    output = output.Remove(output.Length - 1);   // delete last dot.
 
                     break;
 

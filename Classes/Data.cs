@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public class Data<T> : Datagram where T : Record
     {
@@ -56,10 +56,10 @@ namespace dnc_csharp.Classes
                 for (int rn = 0; rn < numberOfRecords; rn++)
                 {
                     int rLengthIndex = 10 + startIndex;
-                    int rLength = GetDataInt(rLengthIndex) + 10 + 1;
-                    endIndex = rLength + 1;
+                    int rLength = GetDataInt(rLengthIndex) + 10 + 2;
+                    endIndex += rLength;
 
-                    var arg = data.Skip(startIndex).Take(endIndex).ToArray();
+                    var arg = data.Skip(startIndex).Take(rLength).ToArray();
                     T rec = (T)Activator.CreateInstance(typeof(T), arg);
                     records.Insert(rn, rec);
 

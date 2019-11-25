@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public class Header : Datagram
     {

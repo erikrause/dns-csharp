@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace dnc_csharp.Classes
+namespace dns_csharp.Classes
 {
     public class Message : Datagram
     {
@@ -93,7 +93,7 @@ namespace dnc_csharp.Classes
                 //int rLength = Data[rLeghthIndex] + rLeghthIndex;
                 int rLength = GetDataInt(rLeghthIndex, 2) + 10 + 1;
                 dLength += rLength + 1;  // Add 2 type & class bytes;
-                startByte += dLength;
+                startByte += rLength + 1;
             }
             return dLength;
         }
