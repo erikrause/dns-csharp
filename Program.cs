@@ -37,7 +37,7 @@ namespace dns_csharp
 
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             IPHostEntry ipHost = Dns.GetHostEntry(dnsAddress);
-            IPAddress ipAddr = ipHost.AddressList[0]; 
+            IPAddress ipAddr = ipHost.AddressList[0];
             EndPoint ipEndPoint = new IPEndPoint(ipAddr, dnsPort);
             socket.SendTo(request.Data, ipEndPoint);
 
@@ -59,6 +59,8 @@ namespace dns_csharp
             #endregion
 
             socket.Close();
+
+            Console.ReadKey();
         }
 
         static void PrintAnswer(Message response)
@@ -115,7 +117,7 @@ namespace dns_csharp
             switch (type)
             {
                 case 1:     // type A.
-                    foreach(byte b in data)
+                    foreach (byte b in data)
                     {
                         output += b.ToString() + '.';
                     }

@@ -85,7 +85,7 @@ namespace dns_csharp.Classes
         {
             byte[] byteArray = DataRange(startByte, numberOfBytes);
             Array.Reverse(byteArray);
-            return (ushort)BitConverter.ToInt16(byteArray);
+            return (ushort)BitConverter.ToInt16(byteArray, 0);
         }
 
         protected byte[] ToBytes(ushort data)
