@@ -3,6 +3,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Linq;
+using System.Collections.Generic;
 
 using dns_csharp.Classes;
 
@@ -70,6 +71,8 @@ namespace dns_csharp
 
             Console.Write("NAME");
             Console.SetCursorPosition(25, 0);
+            Console.Write("TYPE");
+            Console.SetCursorPosition(50, 0);
             Console.WriteLine("RDATA");
 
             foreach (ResourceRecord record in answer.Records)
@@ -80,7 +83,10 @@ namespace dns_csharp
                 string name = GetName(response.Question, shift - response.Header.Data.Length);
                 Console.Write(name);
                 Console.SetCursorPosition(25, i + 1);
+                Console.Write(ConvertTypesToStr[record.TYPE]);
 
+
+                Console.SetCursorPosition(50, i + 1);
                 string data = ConvertData(record.RDATA, record.TYPE);
                 Console.WriteLine(data);
                 i++;
@@ -146,5 +152,18 @@ namespace dns_csharp
 
             return output;
         }
+
+        public static Dictionary<int, string> ConvertTypesToStr = new Dictionary<int, string>()
+        {
+            { 1, "A" },
+            { 28, "AAAA"  },
+            { 5, "CNAME" },
+            { 15, "MX" },
+            { 33, "SRV" },
+            { 2, "NS" },
+            { 12, "PTR" },
+            { 6, "SOA"},
+            { 16, "TXT" }
+        };
     }
 }
