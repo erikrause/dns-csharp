@@ -10,3 +10,7 @@ Example:
     > dns-csharp 8.8.8.8 example.com TXT
     NAME                     TYPE                     RDATA
     example.com              TXT                      v=spf1 -all
+
+Реализована обработка RDATA для типов записей A и TXT.
+
+Для остальных типов нужно добавить свою обработку в методе Program.ConvertData.
