@@ -117,7 +117,13 @@ namespace dns_csharp
 
             return name;
         }
-        static string ParseData(ResourceRecord record, Message response)
+        /// <summary>
+        /// Преобразование RDATA ресурсной в строку.
+        /// </summary>
+        /// <param name="record"> Ресурсная запись ответа. </param>
+        /// <param name="message"> Ответ. необходим для получения доменного имени по ссылке из ресурсной записи. </param>
+        /// <returns></returns>
+        static string ParseData(ResourceRecord record, Message message)
         {
             byte[] data = record.RDATA;
             int type = record.TYPE;
@@ -139,7 +145,8 @@ namespace dns_csharp
                     output = Datagram.ToString(data);
                     break;
                 case 15:    // MX.
-                    var result = MXParser(data);
+                    var mailExchangerRecord = MXParser(data, message.Data);
+                    output += $"Priority: {mailExchangerRecord.priority}, Domain: {mailExchangerRecord.domain}";
                     break;
 
                 case 6:     // SOA.
@@ -175,8 +182,9 @@ namespace dns_csharp
         /// Возвращает две строки: приоритет и имя почтового сервера.
         /// </summary>
         /// <param name="RDATA"> Resource record's data. </param>
-        /// <returns></returns>
-        public static Dictionary<int, string> MXParser(byte[] RDATA)
+        /// <param name="message"> Response datagram. </param>
+        /// <returns> Кортеж приоритета и домена почтового сервера. </returns>
+        public static (int priority, string domain) MXParser(byte[] RDATA, byte[] message)
         {
             int priority = RDATA[1];
 
@@ -184,7 +192,7 @@ namespace dns_csharp
             int count;
             string fullDomain = "";
 
-            while (pointer < RDATA.Length)
+            while (pointer < RDATA.Length && RDATA[pointer] != 0)
             {
                 
                 string domain = "";
@@ -197,13 +205,14 @@ namespace dns_csharp
                 else
                 {
                     domain = "not implemented";
+                    //domain = MXParser()
                     pointer += 2 + 1;
                 }
                 fullDomain += domain + ".";
             }
             fullDomain = fullDomain.Remove(fullDomain.Length - 1);       // Delete last '.' after the loop.
 
-            return new Dictionary<int, string> { { priority, fullDomain } };
+            return (priority, fullDomain);
         }
     }
 }
