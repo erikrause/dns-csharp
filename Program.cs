@@ -216,7 +216,7 @@ namespace dns_csharp
                     nameShift = nameShift - (0b11 << 14);
 
                     domain = NameParser(message.Skip(nameShift).ToArray(), message);
-                    pointer += 2 + 1;
+                    pointer += 2;
                 }
                 fullDomain += domain + ".";
             }
