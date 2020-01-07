@@ -88,7 +88,7 @@ namespace dns_csharp
 
 
                 Console.SetCursorPosition(50, i + 1);
-                string data = ConvertData(record.RDATA, record.TYPE);
+                string data = ParseData(record, response);
                 Console.WriteLine(data);
                 i++;
             }
@@ -117,8 +117,10 @@ namespace dns_csharp
 
             return name;
         }
-        static string ConvertData(byte[] data, int type)
+        static string ParseData(ResourceRecord record, Message response)
         {
+            byte[] data = record.RDATA;
+            int type = record.TYPE;
             string output = "";
 
             switch (type)
