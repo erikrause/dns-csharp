@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace dns_csharp.Classes
 {
@@ -43,7 +42,7 @@ namespace dns_csharp.Classes
             int i = startByte;
             byte byteData;
             i--;
-            
+
             do
             {
                 i++;
@@ -68,7 +67,7 @@ namespace dns_csharp.Classes
         protected void SetData(int startByte, byte[] data)
         {
             int i = startByte;
-            foreach(byte b in data)
+            foreach (byte b in data)
             {
                 Data[i] = b;
                 i++;

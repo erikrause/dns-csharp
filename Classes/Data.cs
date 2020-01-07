@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace dns_csharp.Classes
@@ -17,7 +16,7 @@ namespace dns_csharp.Classes
 
             var data = new List<byte>();
 
-            foreach(Record rec in queryes)
+            foreach (Record rec in queryes)
             {
                 Records.Add((T)rec);
                 data.AddRange(rec.Data);
@@ -66,24 +65,24 @@ namespace dns_csharp.Classes
                     startIndex = endIndex;
                 }
             }
-            
+
 
             return records;
         }
         public List<T> Records;
-            //Need to implement IObservable? to do dynamic setter!
-            //set
-            //{
-               // _records = value;
+        //Need to implement IObservable? to do dynamic setter!
+        //set
+        //{
+        // _records = value;
 
-                // Update Data:
-                //var data = new List<byte>();
-                //foreach (T record in _records)
-                //{
-                //   data.AddRange(record.Data);
-                //}
+        // Update Data:
+        //var data = new List<byte>();
+        //foreach (T record in _records)
+        //{
+        //   data.AddRange(record.Data);
+        //}
 
-                //Data = data.ToArray();
-            //}
+        //Data = data.ToArray();
+        //}
     }
 }

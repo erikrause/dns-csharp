@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace dns_csharp.Classes
 {
@@ -32,8 +30,8 @@ namespace dns_csharp.Classes
 
             }
             //{
-                //byte[] data = ToBytes(value);
-                //SetData(NameEnd + 2, data);
+            //byte[] data = ToBytes(value);
+            //SetData(NameEnd + 2, data);
             //}
         }
 

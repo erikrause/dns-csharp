@@ -1,11 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using dns_csharp.Classes;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Linq;
-using System.Collections.Generic;
-
-using dns_csharp.Classes;
+using System.Text;
 
 namespace dns_csharp
 {
@@ -187,7 +186,7 @@ namespace dns_csharp
         public static (int priority, string domain) MXParser(byte[] RDATA, byte[] message)
         {
             int priority = RDATA[1];
-            
+
             string domain = NameParser(RDATA.Skip(2).ToArray(), message);
 
             return (priority, domain);

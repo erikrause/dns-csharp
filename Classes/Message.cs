@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace dns_csharp.Classes
 {
     public class Message : Datagram
     {
-        public Message(Query query) : this(new Query[]{ query })
+        public Message(Query query) : this(new Query[] { query })
         {
         }
         /// <summary>
@@ -53,7 +52,7 @@ namespace dns_csharp.Classes
         protected void OnDataChanged(object sender, EventArgs e)
         {
             int startByte = 0;
-            
+
             if (sender is Header)
             {
                 startByte = 0;

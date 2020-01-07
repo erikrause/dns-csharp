@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
-
-namespace dns_csharp.Classes
+﻿namespace dns_csharp.Classes
 {
     public class ResourceRecord : Record
     {

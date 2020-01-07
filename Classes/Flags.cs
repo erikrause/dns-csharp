@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace dns_csharp.Classes
+﻿namespace dns_csharp.Classes
 {
     public class Flags : Datagram
     {
@@ -24,7 +20,7 @@ namespace dns_csharp.Classes
                 SetData(0, ToBytes((ushort)_field));
             }
         }
-               
+
         protected int GetValue(int mask)
         {
             int flag = Field & mask;
