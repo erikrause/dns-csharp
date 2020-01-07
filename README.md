@@ -11,6 +11,9 @@ Example:
     NAME                     TYPE                     RDATA
     example.com              TXT                      v=spf1 -all
 
-Реализована обработка RDATA для типов записей A и TXT.
+Реализована обработка RDATA для записей типов:
+- A
+- TXT
+- MX
 
-Для остальных типов нужно добавить свою обработку в методе Program.ConvertData.
+Для остальных типов нужно добавить свою обработку в методе Program.ParseData.
