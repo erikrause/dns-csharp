@@ -187,32 +187,40 @@ namespace dns_csharp
         public static (int priority, string domain) MXParser(byte[] RDATA, byte[] message)
         {
             int priority = RDATA[1];
+            
+            string domain = NameParser(RDATA.Skip(2).ToArray());
 
-            int pointer = 2;
+            return (priority, domain);
+        }
+
+        public static string NameParser(byte[] data)
+        {
+            int pointer = 0;
             int count;
             string fullDomain = "";
 
-            while (pointer < RDATA.Length && RDATA[pointer] != 0)
+            while (pointer < data.Length && data[pointer] != 0)
             {
-                
+
                 string domain = "";
-                count = RDATA[pointer];
-                if (RDATA[pointer] < 192)   // Если это не ссылка
+                count = data[pointer];
+                if (data[pointer] < 192)   // Если это не ссылка
                 {
-                    domain = Encoding.UTF8.GetString(RDATA.Skip(pointer + 1).Take(count).ToArray());
+                    domain = Encoding.UTF8.GetString(data.Skip(pointer + 1).Take(count).ToArray());
                     pointer += count + 1;
                 }
                 else
                 {
                     domain = "not implemented";
-                    //domain = MXParser()
+                    //int nameShift = data[pointer] - (0b11 << 14);
+                    //domain = MXParser(message.Skip(nameShift).ToArray(), message);
                     pointer += 2 + 1;
                 }
                 fullDomain += domain + ".";
             }
             fullDomain = fullDomain.Remove(fullDomain.Length - 1);       // Delete last '.' after the loop.
 
-            return (priority, fullDomain);
+            return fullDomain;
         }
     }
 }
