@@ -188,12 +188,12 @@ namespace dns_csharp
         {
             int priority = RDATA[1];
             
-            string domain = NameParser(RDATA.Skip(2).ToArray());
+            string domain = NameParser(RDATA.Skip(2).ToArray(), message);
 
             return (priority, domain);
         }
-
-        public static string NameParser(byte[] data)
+        // TODO: перенести этот метод в датаграмму:
+        public static string NameParser(byte[] data, byte[] message)
         {
             int pointer = 0;
             int count;
@@ -204,16 +204,19 @@ namespace dns_csharp
 
                 string domain = "";
                 count = data[pointer];
-                if (data[pointer] < 192)   // Если это не ссылка
+                if (data[pointer] < 192)   // Если это не смещение байт, то получить домен по количеству символов (байт).
                 {
                     domain = Encoding.UTF8.GetString(data.Skip(pointer + 1).Take(count).ToArray());
                     pointer += count + 1;
                 }
-                else
+                else        // Если это смещение байт, то получить домен по смещению байт в сообщении.
                 {
-                    domain = "not implemented";
-                    //int nameShift = data[pointer] - (0b11 << 14);
-                    //domain = MXParser(message.Skip(nameShift).ToArray(), message);
+                    byte[] nameShiftBytes = data.Skip(pointer).Take(2).ToArray();
+                    Array.Reverse(nameShiftBytes);
+                    int nameShift = (ushort)BitConverter.ToInt16(nameShiftBytes, 0);
+                    nameShift = nameShift - (0b11 << 14);
+
+                    domain = NameParser(message.Skip(nameShift).ToArray(), message);
                     pointer += 2 + 1;
                 }
                 fullDomain += domain + ".";
