@@ -11,7 +11,9 @@ namespace dns_csharp.Classes
         {
 
         }
-
+        /// <summary>
+        /// Возвращает смещение битов, указывающее на домен в запросе.
+        /// </summary>
         public override string NAME
         {
             get

@@ -57,6 +57,7 @@ namespace dns_csharp
             var response = new Message(data);
             PrintAnswer(response);
 
+            var prob = response.Question.Records[0].NAME;
             #endregion
 
             socket.Close();
@@ -135,6 +136,9 @@ namespace dns_csharp
                     // need to implement.
                     output = Datagram.ToString(data);
                     break;
+                case 15:    // MX.
+                    var result = MXParser(data);
+                    break;
 
                 case 6:     // SOA.
                     // need to implement.
@@ -165,5 +169,39 @@ namespace dns_csharp
             { 6, "SOA"},
             { 16, "TXT" }
         };
+        /// <summary>
+        /// Возвращает две строки: приоритет и имя почтового сервера.
+        /// </summary>
+        /// <param name="RDATA"> Resource record's data. </param>
+        /// <returns></returns>
+        public static Dictionary<int, string> MXParser(byte[] RDATA)
+        {
+            int priority = RDATA[1];
+
+            int pointer = 2;
+            int count;
+            string fullDomain = "";
+
+            while (pointer < RDATA.Length)
+            {
+                
+                string domain = "";
+                count = RDATA[pointer];
+                if (RDATA[pointer] < 192)   // Если это не ссылка
+                {
+                    domain = Encoding.UTF8.GetString(RDATA.Skip(pointer + 1).Take(count).ToArray());
+                    pointer += count + 1;
+                }
+                else
+                {
+                    domain = "not implemented";
+                    pointer += 2 + 1;
+                }
+                fullDomain += domain + ".";
+            }
+            fullDomain = fullDomain.Remove(fullDomain.Length - 1);       // Delete last '.' after the loop.
+
+            return new Dictionary<int, string> { { priority, fullDomain } };
+        }
     }
 }

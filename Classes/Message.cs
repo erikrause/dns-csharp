@@ -9,6 +9,10 @@ namespace dns_csharp.Classes
         public Message(Query query) : this(new Query[]{ query })
         {
         }
+        /// <summary>
+        /// Инициализация для сообщения-запроса
+        /// </summary>
+        /// <param name="queryes"></param>
         public Message(Query[] queryes)
         {
             List<byte> data = new List<byte>();
@@ -22,6 +26,10 @@ namespace dns_csharp.Classes
 
             InitializeHandlers();
         }
+        /// <summary>
+        /// Инициализация для сообщения-ответа
+        /// </summary>
+        /// <param name="data"> Датаграмма TCP </param>
         public Message(byte[] data) : base(data)
         {
             Header = new Header(DataRange(0, 12));

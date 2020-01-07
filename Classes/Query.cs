@@ -66,7 +66,7 @@ namespace dns_csharp.Classes
                     name += domain + '.';
                     start = start + count + 1;
                 }
-                name = name.Remove(name.Length - 1);   // Delete last '.' after loop.
+                name = name.Remove(name.Length - 1);   // Delete last '.' after the loop.
 
                 return name;
             }
